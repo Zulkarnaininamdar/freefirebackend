@@ -114,8 +114,13 @@ def get_player(player_id: int, db: Session = Depends(get_db)):
             )
         )
     teammates.sort(key=lambda t: t.wins_together, reverse=True)
+    top_teammates = [t for t in teammates if t.wins_together > 0][:2]
 
-    return schemas.PlayerDetailOut(player=_player_out(player), teammates=teammates)
+    return schemas.PlayerDetailOut(
+        player=_player_out(player),
+        teammates=teammates,
+        top_teammates=top_teammates,
+    )
 
 
 @app.post("/players", response_model=schemas.PlayerOut)

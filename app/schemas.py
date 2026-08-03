@@ -38,6 +38,7 @@ class TeammateOut(BaseModel):
 class PlayerDetailOut(BaseModel):
     player: PlayerOut
     teammates: List[TeammateOut]
+    top_teammates: List[TeammateOut]
 
 
 class ShuffleRequest(BaseModel):

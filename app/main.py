@@ -1,3 +1,4 @@
+import os
 from datetime import date
 from itertools import combinations
 from typing import List, Optional
@@ -23,9 +24,16 @@ with SessionLocal() as db:
 
 app = FastAPI(title="Free Fire Team Shuffler")
 
+_default_origins = "https://freefirefrontend.vercel.app,http://localhost:5173,http://127.0.0.1:5173"
+_cors_origins = [
+    origin.strip()
+    for origin in os.getenv("CORS_ORIGINS", _default_origins).split(",")
+    if origin.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
